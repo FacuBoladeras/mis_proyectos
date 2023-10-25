@@ -104,15 +104,7 @@ class TodoApp(ft.UserControl):
         )
 
         self.items_left = ft.Text("0 archivos", color=ft.colors.BLACK)
-        
-        lista = []
-        def agregar_val(e):
-            
-            valor = ft.Text(self.new_task.value)
-            lista.append(valor)
-            print(type(valor))        
-        print(lista)
-        
+
             
         # application's root control (i.e. "view") containing all other controls
         return ft.Column(
@@ -143,7 +135,7 @@ class TodoApp(ft.UserControl):
                             controls=[
                                 self.items_left,
                                 ft.OutlinedButton(
-                                    text="Agregar", on_click=agregar_val,
+                                    text="Agregar",
                                 ),
                             ],
                         ),

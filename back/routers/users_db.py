@@ -15,7 +15,7 @@ router = APIRouter(prefix="/userdb",
 
 @router.get("/", response_model=list[User])
 async def users():
-    return users_schema(db_client.users.find())
+    return users_schema(db_client.cons.find())
 
 
 @router.get("/{id}")  # Path
@@ -30,16 +30,16 @@ async def user(id: str):
 
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def user(user: User):
-    if type(search_user("email", user.email)) == User:
+    if type(search_user("patente", user.patente)) == User:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="El usuario ya existe")
 
     user_dict = dict(user)
     del user_dict["id"]
 
-    id = db_client.users.insert_one(user_dict).inserted_id
+    id = db_client.cons.insert_one(user_dict).inserted_id
 
-    new_user = user_schema(db_client.users.find_one({"_id": id}))
+    new_user = user_schema(db_client.cons.find_one({"_id": id}))
 
     return User(**new_user)
 
@@ -62,7 +62,7 @@ async def user(user: User):
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def user(id: str):
 
-    found = db_client.users.find_one_and_delete({"_id": ObjectId(id)})
+    found = db_client.consesionario.find_one_and_delete({"_id": ObjectId(id)})
 
     if not found:
         return {"error": "No se ha eliminado el usuario"}

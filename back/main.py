@@ -12,11 +12,11 @@ from routers import products, users, basic_auth_users, users_db
 app = FastAPI()
 
 # Clase en vídeo: https://youtu.be/_y9qQZXE24A?t=12475
-app.include_router(products.router)
-app.include_router(users.router)
+#app.include_router(products.router)
+#app.include_router(users.router)
 
 # Clase en vídeo: https://youtu.be/_y9qQZXE24A?t=14094
-app.include_router(basic_auth_users.router)
+#app.include_router(basic_auth_users.router)
 
 
 # Clase en vídeo: https://youtu.be/_y9qQZXE24A?t=20480
