@@ -7,6 +7,7 @@ img = ft.Image(
         height=300,
         fit=ft.ImageFit.CONTAIN,)
 
+
 class Task(ft.UserControl):
     def __init__(self, task_name, task_status_change, task_delete):
         super().__init__()
@@ -81,7 +82,20 @@ class Task(ft.UserControl):
         await self.task_delete(self)
 
 
+    
+
 class TodoApp(ft.UserControl):
+
+    lista = []
+
+    def button_clicked(self, e):
+        self.t.value = f"{self.new_task.value}"
+        TodoApp.update()
+        self.lista.append(self.t.value)
+    
+    print(lista)
+
+    t = ft.Text()
     
     def build(self):
         peticion =ft.TextField( hint_text="Marca",on_submit=self.add_clicked, expand=True, color= ft.colors.INDIGO_500)
@@ -104,7 +118,6 @@ class TodoApp(ft.UserControl):
         )
 
         self.items_left = ft.Text("0 archivos", color=ft.colors.BLACK)
-
             
         # application's root control (i.e. "view") containing all other controls
         return ft.Column(
@@ -135,7 +148,7 @@ class TodoApp(ft.UserControl):
                             controls=[
                                 self.items_left,
                                 ft.OutlinedButton(
-                                    text="Agregar",
+                                    text="Agregar",on_click=self.button_clicked,
                                 ),
                             ],
                         ),
