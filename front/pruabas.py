@@ -1,7 +1,8 @@
 import flet as ft
 
+lista = []
 def main(page: ft.Page):
-    lista = []
+    
     def button_clicked(e):
         t.value = {tb1.value}, {tb2.value}, {tb3.value}
         
