@@ -5,19 +5,19 @@ import streamlit as st
 # Establish a connection to MySQL Server
 
 #conexion remota
-# mydb = mysql.connector.connect(
-#     host="viaduct.proxy.rlwy.net",
-#     user="root",
-#     port="43998",
-#     password="Bg1-CcfDfDcG6e3GeFa4hBAaDc5B3CgC",
-#     database="railway")
+mydb = mysql.connector.connect(
+    host="viaduct.proxy.rlwy.net",
+    user="root",
+    port=43998,
+    password="Bg1-CcfDfDcG6e3GeFa4hBAaDc5B3CgC",
+    database="railway")
 
 #conexion local
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Soler839",
-    database="crud_rabbia")
+# mydb = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     password="Soler839",
+#     database="crud_rabbia")
 
 
 mycursor=mydb.cursor()
@@ -26,6 +26,7 @@ print("Connection Established")
 # Create Streamlit Appcrud_streamlit
 
 def main():
+    
     st.title("Gestor de clientes Ruben Rabbia seguros");
 
     # Display Options for CRUD Operations
@@ -54,7 +55,7 @@ def main():
         compañia = st.selectbox("Compañia", ["RUS", "RIVADAVIA", "COOP"])
 
         # Consulta SQL para obtener registros que coincidan con la compañia y ordenados por fecha_de_fin
-        sql = "SELECT * FROM customers WHERE compañia = %s ORDER BY fecha_de_fin DESC"
+        sql = "SELECT * FROM customers WHERE compañia = %s ORDER BY fecha_de_fin ASC"
         val = (compañia,)
 
         # Ejecutar la consulta
@@ -69,24 +70,23 @@ def main():
 
 
 
-    elif option == "Modificar":
-        st.subheader("Modificar usuario")
-        id = st.number_input("Enter ID", min_value=1)
-        name = st.text_input("Enter New Name")
-        email = st.text_input("Enter New Email")
-        patente = st.text_input("Enter New Patente")
-        marca = st.text_input("Enter New Marca")
-        modelo = st.text_input("Enter New Modelo")
-        tipo_de_plan = st.text_input("Enter New Tipo de Plan")
-        fecha_de_inicio = st.text_input("Enter New Fecha de Inicio")
-        fecha_de_fin = st.text_input("Enter New Fecha de Fin")
-        
-        if st.button("Modificar"):
-            sql = "UPDATE customers SET name=%s, email=%s, patente=%s, marca=%s, modelo=%s, tipo_de_plan=%s, fecha_de_inicio=%s, fecha_de_fin=%s WHERE id = %s"
-            val = (name, email, patente, marca, modelo, tipo_de_plan, fecha_de_inicio, fecha_de_fin, id)
+    elif option == "Crear":
+        st.subheader("Agregar usuario")
+        name = st.text_input("Enter Name")
+        contacto = st.text_input("Enter Contacto")
+        poliza = st.text_input("Enter Poliza")
+        compañia = st.selectbox("Compañia", ["RUS", "RIVADAVIA", "COOP"])
+        tipo_de_plan = st.selectbox("Tipo de plan", ["Trimestral", "Cuatrimestral", "Semestral"])
+        fecha_de_inicio = st.date_input("Enter Fecha de Inicio")
+        fecha_de_fin = st.date_input("Enter Fecha de fin")
+
+        if st.button("Crear"):
+            sql = "INSERT INTO customers (name, contacto, poliza, compañia, tipo_de_plan, fecha_de_inicio, fecha_de_fin) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (name, contacto, poliza, compañia, tipo_de_plan, fecha_de_inicio, fecha_de_fin)
             mycursor.execute(sql, val)
             mydb.commit()
-            st.success("Record Updated Successfully!!!")
+            st.success("Record Created Successfully!!!")
+
 
 
 
