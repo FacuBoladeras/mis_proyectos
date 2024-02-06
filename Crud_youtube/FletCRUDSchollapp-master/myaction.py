@@ -6,13 +6,12 @@ conn = sqlite3.connect("db/dbone.db",check_same_thread=False)
 
 def create_table():
 	c = conn.cursor()
-	c.execute("""CREATE TABLE IF NOT EXISTS users(
+	c.execute("""CREATE TABLE IF NOT EXISTS Consecionaria(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT,
-		contact TEXT,
-		age INTEGER,
-		gender TEXT,
-		email TEXT,
-		address TEXT)
+		Marca TEXT,
+		Modelo TEXT,
+		Patente TEXT,
+		Comprador TEXT,
+		Telefono TEXT,)
 		""")
 	conn.commit()

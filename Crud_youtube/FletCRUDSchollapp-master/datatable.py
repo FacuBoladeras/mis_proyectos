@@ -5,11 +5,11 @@ conn = sqlite3.connect('db/dbone.db',check_same_thread=False)
 tb = DataTable(
 	columns=[
 		DataColumn(Text("actions")),
-		DataColumn(Text("name")),
-		DataColumn(Text("age")),
-		DataColumn(Text("contact")),
-		DataColumn(Text("email")),
-		DataColumn(Text("address")),
+		DataColumn(Text("Marca")),
+		DataColumn(Text("Modelo")),
+		DataColumn(Text("Patente")),
+		DataColumn(Text("Comprador")),
+		DataColumn(Text("Telefono")),
 		DataColumn(Text("gender")),
 	],
 	rows=[]
@@ -33,16 +33,16 @@ def showdelete(e):
 
 
 id_edit = Text()
-name_edit = TextField(label="name")
-age_edit = TextField(label="age")
-contact_edit = TextField(label="contact")
+name_edit = TextField(label="Marca")
+age_edit = TextField(label="Modelo")
+contact_edit = TextField(label="Patente")
 gender_edit = RadioGroup(content=Column([
 		Radio(value="man",label="man"),
         Radio(value="woman",label="woman"),
 
 	]))
-email_edit = TextField(label="email")
-address_edit = TextField(label="address")
+email_edit = TextField(label="Comprador")
+address_edit = TextField(label="Telefono")
 
 
 def hidedlg(e):
@@ -54,7 +54,7 @@ def updateandsave(e):
 	try:
 		myid = id_edit.value
 		c = conn.cursor()
-		c.execute("UPDATE users SET name=?, contact=?, age=?, gender=?, email=?, address=? WHERE id=?", (name_edit.value, contact_edit.value, age_edit.value, gender_edit.value, email_edit.value, address_edit.value, myid))
+		c.execute("UPDATE users SET Marca=?, Modelo=?, Patente=?, gender=?, Comprador=?, Telefono=? WHERE id=?", (name_edit.value, contact_edit.value, age_edit.value, gender_edit.value, email_edit.value, address_edit.value, myid))
 		conn.commit()
 		print("success Edit ")
 		tb.rows.clear()	
@@ -91,12 +91,12 @@ dlg = Container(
 def showedit(e):
 	data_edit = e.control.data
 	id_edit.value = data_edit['id']
-	name_edit.value = data_edit['name']
-	age_edit.value = data_edit['age']
-	contact_edit.value = data_edit['contact']
+	name_edit.value = data_edit['Marca']
+	age_edit.value = data_edit['Modelo']
+	contact_edit.value = data_edit['Patente']
 	gender_edit.value = data_edit['gender']
-	email_edit.value = data_edit['email']
-	address_edit.value = data_edit['address']
+	email_edit.value = data_edit['Comprador']
+	address_edit.value = data_edit['Telefono']
 
 	dlg.visible = True
 	dlg.update()
@@ -108,7 +108,7 @@ def calldb():
 	users = c.fetchall()
 	print(users)
 	if not users == "":
-		keys = ['id', 'name', 'contact', 'age', 'gender', 'email', 'address']
+		keys = ['id', 'Marca', 'Modelo', 'Patente', 'gender', 'Comprador', 'Telefono']
 		result = [dict(zip(keys, values)) for values in users]
 		for x in result:
 			tb.rows.append(
@@ -126,12 +126,12 @@ def calldb():
 
                         		),
                         	])),
-                        DataCell(Text(x['name'])),
-                        DataCell(Text(x['age'])),
-                        DataCell(Text(x['contact'])),
+                        DataCell(Text(x['Marca'])),
+                        DataCell(Text(x['Modelo'])),
+                        DataCell(Text(x['Patente'])),
                         DataCell(Text(x['email'])),
-                        DataCell(Text(x['address'])),
-                        DataCell(Text(x['gender'])),
+                        DataCell(Text(x['Comprador'])),
+                        DataCell(Text(x['Telefono'])),
                     ],
                 ),
 

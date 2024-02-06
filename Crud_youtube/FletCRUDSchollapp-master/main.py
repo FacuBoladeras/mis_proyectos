@@ -1,12 +1,14 @@
 from flet import *
-import flet
+import flet as ft
 # IMPORT YOU CREATE TABLE 
 from myaction import create_table
 from datatable import mytable,tb,calldb
 import sqlite3
-conn = sqlite3.connect("db/done.db",check_same_thread=False)
+conn = sqlite3.connect("db/dbone.db",check_same_thread=False)
 
 def main(page:Page):
+    
+
 
 	# AND RUN SCRIPT FOR CREATE TABLE WHEN FLET FIRST RUN
 	create_table()
@@ -25,7 +27,7 @@ def main(page:Page):
 		try:
 			# INPUT TO DATABASE
 			c = conn.cursor()
-			c.execute("INSERT INTO users (name,age,contact,email,address,gender) VALUES(?,?,?,?,?,?)",(name.value,age.value,contact.value,email.value,address.value,gender.value))
+			c.execute("INSERT INTO users (Marca,Modelo,Patente,Telefono,Comprador,gender) VALUES(?,?,?,?,?,?)",(name.value,age.value,contact.value,email.value,address.value,gender.value))
 			conn.commit()
 			print("success")
 
@@ -53,11 +55,11 @@ def main(page:Page):
 
 	# CREATE FIELD FOR INPUT
 
-	name = TextField(label="name")
-	age = TextField(label="age")
-	contact = TextField(label="contact")
+	name = TextField(label="Nombre")
+	age = TextField(label="Edad")
+	contact = TextField(label="Contacto")
 	email = TextField(label="email")
-	address = TextField(label="address")
+	address = TextField(label="Direccion")
 	gender = RadioGroup(content=Column([
 		Radio(value="man",label="man"),
 		Radio(value="woman",label="woman")
@@ -73,7 +75,7 @@ def main(page:Page):
 		content=Container(
 			content=Column([
 				Row([
-				Text("Add new data",size=20,weight="bold"),
+				Text("Añadir dato",size=20,weight="bold"),
 				IconButton(icon="close",icon_size=30,
 				on_click=hidecon
 					),
@@ -94,22 +96,28 @@ def main(page:Page):
 
 		)
 
+	img = ft.Image(
+    src=f"https://100seguro.com.ar/wp-content/uploads/2023/07/Logo-Rivadavia-FullHD-990x557.jpg",
+    width=300,
+    height=300,
+    fit=ft.ImageFit.CONTAIN,)
 
-	page.add(
+	page.add(img,
 	Column([
 		Text("SCHOLL APP",size=30,weight="bold"),
-		ElevatedButton("add new data",
+		ElevatedButton("Añadir dato",
 		on_click=showInput
 		),
 		mytable,
 		# AND DIALOG FOR ADD DATA
-		inputcon 
+		inputcon
 
 
 		# NOTICE IF YOU ERROR
 		# DISABLE import Datatable like this
 		])
-
 		)
+ 
 
-flet.app(target=main)
+ 
+ft.app(target=main)
